@@ -1,10 +1,10 @@
 import express from 'express';
-import { configDotenv } from 'dotenv';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import userModel from './db';
 import bcrypt from 'bcrypt';
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
 app.use(express.json())
 
@@ -23,19 +23,19 @@ app.post("/api/v1/signup", async (req, res) => {
         const userExist = await userModel.findOne({email});
 
         if(userExist) {
-            return res.status(400).json({msg:"email is already exist"})
+            return res.status(401).json({msg:"email is already exist"})
         }
-        const hasedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new userModel({
             name,
             email,
-            password:hasedPassword
+            password:hashedPassword
         });
 
         await user.save();
 
-        return res.status(201).json({msg:"User Login succesfully", userId:user._id});
+        return res.status(201).json({success: true, userId:user._id});
 
     }catch(error){
         res.status(500).json({msg:"Server error"});
@@ -61,6 +61,10 @@ app.post("/api/v1/signin", async (req, res) => {
             return res.status(400).json({ msg: "Password is incorrect" });
         }
 
+        if (!process.env.SECRET_KEY) {
+            throw new Error("SECRET_KEY not defined");
+        }
+
         const token = jwt.sign(
             { userId: userExist._id, email: userExist.email },
             process.env.SECRET_KEY as string,
@@ -69,7 +73,7 @@ app.post("/api/v1/signin", async (req, res) => {
 
         return res.status(200).json({
             msg: "Login successful",
-            token,
+            token
         });
 
     } catch (error) {

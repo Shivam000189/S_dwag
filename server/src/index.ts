@@ -3,8 +3,11 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import userModel from './db';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
+import authMiddleware from './middleware';
+
+
 const app = express();
 app.use(express.json())
 
@@ -77,13 +80,16 @@ app.post("/api/v1/signin", async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Signin error:", error);
         return res.status(500).json({ msg: "Server error" });
     }
 });
 
-app.post("api/v1/content", (req, res)=> {
+app.post("api/v1/content", authMiddleware, (req, res)=> {
     
 })
+
+
 app.get("api/v1/content", (req, res)=> {
 
 })

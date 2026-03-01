@@ -7,7 +7,7 @@ dotenv.config();
 
 const authMiddleware = async (req:any, res:any, next:any) => {
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.spilt('')[1];
+    const token = authHeader && authHeader.split(' ')[1];
 
     if(!token) return res.status(400).json({msg:"There is no token"});
 

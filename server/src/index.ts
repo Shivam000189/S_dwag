@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { response } from 'express';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import userModel from './db';
+import {User, Content, Tag, Link} from './db';
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
 dotenv.config();
@@ -23,14 +23,14 @@ app.post("/api/v1/signup", async (req, res) => {
 
         if(!name || !email || !password) return res.status(401).json({msg:"Fields required"});
 
-        const userExist = await userModel.findOne({email});
+        const userExist = await User.findOne({email});
 
         if(userExist) {
             return res.status(401).json({msg:"email is already exist"})
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = new userModel({
+        const user = new User({
             name,
             email,
             password:hashedPassword
@@ -54,7 +54,7 @@ app.post("/api/v1/signin", async (req, res) => {
             return res.status(400).json({ msg: "Fields are required" });
         }
 
-        const userExist = await userModel.findOne({ email });
+        const userExist = await User.findOne({ email });
         if (!userExist) {
             return res.status(400).json({ msg: "Invalid email or password" });
         }
@@ -85,12 +85,43 @@ app.post("/api/v1/signin", async (req, res) => {
     }
 });
 
-app.post("api/v1/content", authMiddleware, (req, res)=> {
-    
-})
+app.post("/api/v1/content", authMiddleware, async (req, res) => {
+  try {
+    const { type, link, title, tags } = req.body;
+
+    if (!type || !link || !title) {
+      return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    if (!tags || !Array.isArray(tags) || tags.length === 0) {
+      return res.status(400).json({ msg: "At least one tag is required" });
+    }
+
+    const linkExist = await Content.findOne({ link });
+
+    if (linkExist) {
+      return res.status(409).json({ msg: "This link already exists" });
+    }
+
+    const content = new Content({
+      type,
+      link,
+      title,
+      tags,
+      userId:req.userId 
+    });
+
+    await content.save();
+
+    res.status(201).json({ msg: "Content created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
 
 
-app.get("api/v1/content", (req, res)=> {
+app.get("/api/v1/content", (req, res)=> {
 
 })
 

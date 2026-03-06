@@ -32,10 +32,10 @@ const contentTypes = ["image", "article", "video", "audio"] as const;
 
 const contentSchema = new Schema({
   link: { type: String, required: true },
-  type: { type: String, enum: contentTypes, required: true },
+  type: { type: String, enum: contentTypes},
   title: { type: String, required: true },
   tags: [{ type: Types.ObjectId, ref: "Tag" }],
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User"},
 });
 
 export const Content = model("Content", contentSchema);

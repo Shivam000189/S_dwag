@@ -1,4 +1,4 @@
-import express, { response } from 'express';
+import express, { Response, Request } from 'express';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import {User, Content, Tag, Link} from './db';
@@ -93,9 +93,9 @@ app.post("/api/v1/content", authMiddleware, async (req, res) => {
       return res.status(400).json({ msg: "All fields are required" });
     }
 
-    if (!tags || !Array.isArray(tags) || tags.length === 0) {
-      return res.status(400).json({ msg: "At least one tag is required" });
-    }
+    // if (!tags || !Array.isArray(tags) || tags.length === 0) {
+    //   return res.status(400).json({ msg: "At least one tag is required" });
+    // }
 
     const linkExist = await Content.findOne({ link });
 
@@ -107,8 +107,8 @@ app.post("/api/v1/content", authMiddleware, async (req, res) => {
       type,
       link,
       title,
-      tags,
-      userId:req.userId 
+      //@ts-ignore
+      userId:req.userId
     });
 
     await content.save();

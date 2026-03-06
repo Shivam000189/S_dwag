@@ -51,10 +51,10 @@ exports.Tag = (0, mongoose_1.model)("Tag", tagSchema);
 const contentTypes = ["image", "article", "video", "audio"];
 const contentSchema = new mongoose_1.Schema({
     link: { type: String, required: true },
-    type: { type: String, enum: contentTypes, required: true },
+    type: { type: String, enum: contentTypes },
     title: { type: String, required: true },
     tags: [{ type: mongoose_1.Types.ObjectId, ref: "Tag" }],
-    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
 });
 exports.Content = (0, mongoose_1.model)("Content", contentSchema);
 const linkSchema = new mongoose_1.Schema({

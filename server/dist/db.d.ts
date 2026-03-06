@@ -72,26 +72,26 @@ export declare const Tag: mongoose.Model<{
 }>;
 export declare const Content: mongoose.Model<{
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 }, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 }, {
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 } & {
     _id: Types.ObjectId;
 } & {
@@ -100,24 +100,24 @@ export declare const Content: mongoose.Model<{
     id: string;
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 }, mongoose.Document<unknown, {}, {
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 }, {
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 } & {
     _id: Types.ObjectId;
 } & {
@@ -129,18 +129,18 @@ export declare const Content: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         link: string;
-        type: "image" | "article" | "video" | "audio";
         title: string;
         tags: Types.ObjectId[];
-        userId: Types.ObjectId;
+        type?: "image" | "article" | "video" | "audio" | null;
+        userId?: Types.ObjectId | null;
     }, {
         id: string;
     }, mongoose.DefaultSchemaOptions> & Omit<{
         link: string;
-        type: "image" | "article" | "video" | "audio";
         title: string;
         tags: Types.ObjectId[];
-        userId: Types.ObjectId;
+        type?: "image" | "article" | "video" | "audio" | null;
+        userId?: Types.ObjectId | null;
     } & {
         _id: Types.ObjectId;
     } & {
@@ -150,20 +150,20 @@ export declare const Content: mongoose.Model<{
     }> | undefined;
 }, {
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 } & {
     _id: Types.ObjectId;
 } & {
     __v: number;
 }>, {
     link: string;
-    type: "image" | "article" | "video" | "audio";
     title: string;
     tags: Types.ObjectId[];
-    userId: Types.ObjectId;
+    type?: "image" | "article" | "video" | "audio" | null;
+    userId?: Types.ObjectId | null;
 } & {
     _id: Types.ObjectId;
 } & {

@@ -68,26 +68,29 @@ app.post("/api/v1/signin", async (req, res) => {
 });
 app.post("/api/v1/content", middleware_1.default, async (req, res) => {
     try {
-        console.log('hii');
         const { type, link, title, tags } = req.body;
-        if (!type || !link || !title)
-            return res.status(401).json({ msg: "all fields are required" });
+        if (!type || !link || !title) {
+            return res.status(400).json({ msg: "All fields are required" });
+        }
+        // if (!tags || !Array.isArray(tags) || tags.length === 0) {
+        //   return res.status(400).json({ msg: "At least one tag is required" });
+        // }
         const linkExist = await db_1.Content.findOne({ link });
-        if (linkExist)
-            return res.status(401).json({ msg: "this link is already been present" });
-        if (!tags || !Array.isArray(tags) || tags.length === 0)
-            return res.status(400).json({ msg: "At least one tag are required" });
+        if (linkExist) {
+            return res.status(409).json({ msg: "This link already exists" });
+        }
         const content = new db_1.Content({
             type,
             link,
             title,
-            tags
+            //@ts-ignore
+            userId: req.userId
         });
-        console.log(tags);
         await content.save();
-        res.status(201).json({ msg: "The content been created" });
+        res.status(201).json({ msg: "Content created successfully" });
     }
     catch (error) {
+        console.error(error);
         res.status(500).json({ msg: "Server error" });
     }
 });

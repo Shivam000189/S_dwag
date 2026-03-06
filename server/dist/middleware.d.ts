@@ -1,3 +1,4 @@
-declare const authMiddleware: (req: any, res: any, next: any) => Promise<any>;
+import { NextFunction, Request, Response } from "express";
+declare const authMiddleware: (req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>> | undefined;
 export default authMiddleware;
 //# sourceMappingURL=middleware.d.ts.map

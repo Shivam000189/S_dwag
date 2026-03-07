@@ -121,13 +121,21 @@ app.post("/api/v1/content", authMiddleware, async (req, res) => {
 });
 
 
-app.get("/api/v1/content", (req, res)=> {
+app.get("/api/v1/content", authMiddleware, async (req, res)=> {
+    try{
+        let contents;
+        //@ts-ignore
+        contents = await Content.find({userId:req.userId});
 
+        res.status(200).json({contents});
+    }catch(error){
+        res.status(500).json({msg:"Server error"});
+    }
 })
 
 
 app.delete("/api/v1/content", (req, res) => {
-
+    
 })
 
 

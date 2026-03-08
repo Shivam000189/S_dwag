@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const crypto_1 = require("crypto");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -100,7 +101,7 @@ app.get("/api/v1/content", middleware_1.default, async (req, res) => {
     try {
         let contents;
         //@ts-ignore
-        contents = await db_1.Content.find({ userId: req.userId });
+        contents = await db_1.Content.find({ userId: req.userId }).populate('userId', 'name');
         res.status(200).json({ contents });
     }
     catch (error) {
@@ -108,10 +109,71 @@ app.get("/api/v1/content", middleware_1.default, async (req, res) => {
     }
 });
 app.delete("/api/v1/content", middleware_1.default, async (req, res) => {
+    try {
+        const { contentId } = req.body;
+        const deleted = await db_1.Content.findByIdAndDelete({
+            _id: contentId,
+            //@ts-ignore
+            userId: req.userId
+        });
+        if (!deleted)
+            return res.status(404).json({ msg: "Content doesn't found" });
+        res.status(200).json({ msg: "Succesfully deleted" });
+    }
+    catch (error) {
+        res.status(500).json({ msg: "Server error" });
+    }
 });
-app.post("api/v1/brain/share", (req, res) => {
+app.post("/api/v1/brain/share", middleware_1.default, async (req, res) => {
+    try {
+        const { share } = req.body;
+        //@ts-ignore
+        const userId = req.userId;
+        if (share) {
+            const existingLink = await db_1.Link.findOne({ userId });
+            if (existingLink) {
+                return res.json({
+                    hash: existingLink.hash
+                });
+            }
+            const hash = (0, crypto_1.randomBytes)(8).toString('hex');
+            await db_1.Link.create({
+                userId,
+                hash
+            });
+            return res.status(200).json({
+                msg: 'Share link created',
+                hash
+            });
+        }
+        else {
+            await db_1.Link.deleteOne({ userId });
+            return res.json({
+                msg: "share link removed"
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({ msg: "Server error" });
+    }
 });
-app.get("api/v1/brain/:shareLink", (req, res) => {
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
+    try {
+        const { shareLink } = req.params;
+        console.log('hii');
+        const link = await db_1.Link.findOne({ hash: shareLink });
+        if (!link)
+            return res.status(404).json({ msg: "No link found" });
+        const content = await db_1.Content.find({
+            userId: link.userId
+        }).populate("userId", "name");
+        res.status(200).json({
+            content
+        });
+    }
+    catch (error) {
+        res.status(500).json({ msg: "server error" });
+    }
 });
 app.listen(PORT, () => {
     console.log(`server is running on ${PORT}`);

@@ -1,5 +1,6 @@
 import express, { Response, Request } from 'express';
 import mongoose from 'mongoose';
+import {randomBytes} from 'crypto';
 import jwt from 'jsonwebtoken';
 import {User, Content, Tag, Link} from './db';
 import bcrypt from 'bcrypt';
@@ -127,7 +128,7 @@ app.get("/api/v1/content", authMiddleware, async (req, res)=> {
     try{
         let contents;
         //@ts-ignore
-        contents = await Content.find({userId:req.userId});
+        contents = await Content.find({userId:req.userId}).populate('userId', 'name')
 
         res.status(200).json({contents});
     }catch(error){
@@ -137,19 +138,86 @@ app.get("/api/v1/content", authMiddleware, async (req, res)=> {
 
 
 app.delete("/api/v1/content", authMiddleware, async (req, res) => {
+    try{
+        const { contentId } = req.body;
+
+        const deleted = await Content.findByIdAndDelete({
+            _id: contentId,
+            //@ts-ignore
+            userId: req.userId
+        });
+
+        if(!deleted) return res.status(404).json({msg:"Content doesn't found"});
+
+
+        res.status(200).json({msg:"Succesfully deleted"});
+    }catch(error){
+        res.status(500).json({msg:"Server error"})
+    }
+})
+
+
+
+app.post("/api/v1/brain/share", authMiddleware,  async (req, res) => {
+    try{
+        const { share } = req.body;
+
+        //@ts-ignore
+        const userId = req.userId;
+
+        if(share){
+            const existingLink = await Link.findOne({userId});
+
+            if(existingLink){
+                return res.json({
+                    hash:existingLink.hash
+                });
+            }
+
+            
+            const hash = randomBytes(8).toString('hex');
+
         
+            await Link.create({
+                userId,
+                hash
+            });
 
+            return res.status(200).json({
+                msg:'Share link created',
+                hash
+            });
+        }else{
+            await Link.deleteOne({userId});
+            return res.json({
+                msg:"share link removed"
+            });
+        }
+    }catch(error){
+        res.status(500).json({msg:"Server error"})
+    }
 })
 
 
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
+    try{
+        const { shareLink } = req.params;
+        console.log('hii')
 
-app.post("api/v1/brain/share", (req, res) => {
+        const link = await Link.findOne({hash:shareLink});
 
-})
+        if(!link) return res.status(404).json({msg:"No link found"});
 
+        const content = await Content.find({
+            userId:link.userId
+        }).populate("userId", "name");
 
-app.get("api/v1/brain/:shareLink", (req, res) => {
-
+        res.status(200).json({
+            content
+        })
+    }catch(error){
+        res.status(500).json({msg:"server error"});
+    }
 })
 
 

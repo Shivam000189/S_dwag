@@ -87,6 +87,8 @@ app.post("/api/v1/signin", async (req, res) => {
 
 app.post("/api/v1/content", authMiddleware, async (req, res) => {
   try {
+    //@ts-ignore
+    const userId = req.userId
     const { type, link, title, tags } = req.body;
 
     if (!type || !link || !title) {
@@ -103,12 +105,12 @@ app.post("/api/v1/content", authMiddleware, async (req, res) => {
       return res.status(409).json({ msg: "This link already exists" });
     }
 
+    console.log("USER ID:", userId);
     const content = new Content({
       type,
       link,
       title,
-      //@ts-ignore
-      userId:req.userId
+      userId:userId
     });
 
     await content.save();
@@ -134,8 +136,9 @@ app.get("/api/v1/content", authMiddleware, async (req, res)=> {
 })
 
 
-app.delete("/api/v1/content", (req, res) => {
-    
+app.delete("/api/v1/content", authMiddleware, async (req, res) => {
+        
+
 })
 
 

@@ -68,6 +68,8 @@ app.post("/api/v1/signin", async (req, res) => {
 });
 app.post("/api/v1/content", middleware_1.default, async (req, res) => {
     try {
+        //@ts-ignore
+        const userId = req.userId;
         const { type, link, title, tags } = req.body;
         if (!type || !link || !title) {
             return res.status(400).json({ msg: "All fields are required" });
@@ -79,12 +81,12 @@ app.post("/api/v1/content", middleware_1.default, async (req, res) => {
         if (linkExist) {
             return res.status(409).json({ msg: "This link already exists" });
         }
+        console.log("USER ID:", userId);
         const content = new db_1.Content({
             type,
             link,
             title,
-            //@ts-ignore
-            userId: req.userId
+            userId: userId
         });
         await content.save();
         res.status(201).json({ msg: "Content created successfully" });
@@ -105,7 +107,7 @@ app.get("/api/v1/content", middleware_1.default, async (req, res) => {
         res.status(500).json({ msg: "Server error" });
     }
 });
-app.delete("/api/v1/content", (req, res) => {
+app.delete("/api/v1/content", middleware_1.default, async (req, res) => {
 });
 app.post("api/v1/brain/share", (req, res) => {
 });

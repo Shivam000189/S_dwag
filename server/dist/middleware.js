@@ -14,11 +14,19 @@ const authMiddleware = (req, res, next) => {
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY);
-        //@ts-ignore
-        req.user = decoded;
-        next();
+        if (decoded) {
+            //@ts-ignore
+            req.userId = decoded.userId;
+            next();
+        }
+        else {
+            res.status(403).json({
+                message: "You are not logged in"
+            });
+        }
     }
     catch (error) {
+        console.log('error');
         return res.status(401).json({ msg: "Invalid or expired token" });
     }
 };

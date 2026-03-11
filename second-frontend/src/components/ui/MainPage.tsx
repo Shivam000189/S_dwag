@@ -5,7 +5,7 @@ import { Card } from "./Card"
 
 
 export const MainPage = ()=>{
-    return <div className="flex-1">
+    return <div className="flex-1 bg-gray-100">
         <div className="flex p-5 justify-between">
                 <div className="text-3xl font-medium">Add Notes</div>
                 <div className="flex">
@@ -14,7 +14,7 @@ export const MainPage = ()=>{
                 </div>
 
         </div>
-        <div className="grid grid-cols-3 p-10">
+        <div className="grid grid-cols-3 p-10 ">
             <Card title={'hownkn'} size="lg" startIcon={<PlusIcon size="lg" />} />
             <Card title={'hownkn'} size="lg" startIcon={<PlusIcon size="lg" />} />
             <Card title={'hownkn'} size="lg" startIcon={<PlusIcon size="lg" />} />

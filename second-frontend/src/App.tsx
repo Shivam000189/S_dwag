@@ -1,16 +1,20 @@
 
 import './App.css'
 import { PlusIcon } from './components/icons/PlusButton'
+import { ShareButton } from './components/icons/shareButton'
 import { Button } from './components/ui/Button'
+import { MainPage } from './components/ui/MainPage'
+import { SideBar } from './components/ui/SideBar'
 
 function App() {
   
 
   return (
-    <>
-        <Button startIcon={<PlusIcon size='lg'/>} variant='primary' text="Share" size='md'></Button>
-        <Button variant='secondary' text="Content me" size='md'></Button>
-    </>
+    <div className='flex'>
+        
+        <SideBar></SideBar>
+        <MainPage></MainPage>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ type variants = "primary" | "secondary"
 interface ButtonProps {
     variant: variants;
     size: "sm" | "md" | "lg";
-    text: String;
+    text: string;
     startIcon?: ReactElement;
     endIcon?:ReactElement;
     onClick?:()=> void;
@@ -18,7 +18,7 @@ const variants = {
         "secondary":"bg-purple-400"
     } 
 
-const defaultStyle = "rounded-md flex"
+const defaultStyle = "rounded-md flex mr-1"
 
 
 const sizeStyle = {
@@ -31,7 +31,7 @@ const sizeStyle = {
 export const Button = (props: ButtonProps) => {
     return <button className={`${variants[props.variant]} ${sizeStyle[props.size]} ${defaultStyle}`}>
         {props.startIcon ? <div className="pr-2">{props.startIcon}</div> : null}
-        {props.text} {props.endIcon} {props.endIcon}
+        {props.text} {props.endIcon ? <div className="pl-2">{props.endIcon}</div>: null}
         </button>
 };
 

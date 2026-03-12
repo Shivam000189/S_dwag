@@ -202,8 +202,6 @@ app.post("/api/v1/brain/share", authMiddleware,  async (req, res) => {
 app.get("/api/v1/brain/:shareLink", async (req, res) => {
     try{
         const { shareLink } = req.params;
-        console.log('hii')
-
         const link = await Link.findOne({hash:shareLink});
 
         if(!link) return res.status(404).json({msg:"No link found"});

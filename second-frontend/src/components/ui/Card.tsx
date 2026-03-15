@@ -1,17 +1,20 @@
-import type { ReactElement } from "react"
-import { ShareIcon } from "../icons/ShareIcon"
-import { DeleteIcon } from "../icons/DeleteIcon"
-import { Xicon } from "../icons/Xion";
-import { VideoIcon } from "../icons/VideoIcon";
-import { DocumentIcon } from "../icons/DocumentIcon";
-import { ImageIcon } from "../icons/ImageIcon";
 
+import { ShareIcon } from "../../icons/ShareIcon"
+import { DeleteIcon } from "../../icons/DeleteIcon"
+import { Xicon } from "../../icons/Xion";
+import { VideoIcon } from "../../icons/VideoIcon";
+import { DocumentIcon } from "../../icons/DocumentIcon";
+import { ImageIcon } from "../../icons/ImageIcon";
+
+
+type Note = 'tweet' | 'video' | 'document' | 'link';
 
 interface CardProps {
     title:string;
-    type:'tweet' | 'video' | 'document' | 'link';
+    type:Note;
+    link?:string;
     content?:string;
-    tags?:[];
+    tags?:[string, string];
     date:string;
 }
 
@@ -40,14 +43,23 @@ export const Card = (props: CardProps) => {
                 </button>
             </div>
         </div>
-
+        
 
         <div className="flex-1">
-            {props.type === 'video' ? (
-            <div className="w-full aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4">
-                {/* <FileText size={48} className="text-gray-400" /> */}
+            {props.type === 'video' && (
+            <div>
+                {props.type === 'video' && <iframe className="w-full" src={props.link?.replace("watch" , "embed").replace("?v=", "/")} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>}
             </div>
-            ) : null}
+            )}
+
+            {props.type === 'tweet' && 
+                <div className="h-48 object-cover overflow-auto">
+                    <blockquote className="twitter-tweet">
+                        <a href={props.link?.replace("x.com", "twitter.com")}></a> 
+                    </blockquote>
+                </div>
+
+            }
             
             {props.content && (
             <div className="text-brand-text text-sm leading-relaxed">
@@ -61,7 +73,7 @@ export const Card = (props: CardProps) => {
                     </ul>
                 </div>
                 ) : (
-                <p>{props.content}</p>
+                <h1 className="font-medium text-2xl">{props.content}</h1>
                 )}
             </div>
             )}

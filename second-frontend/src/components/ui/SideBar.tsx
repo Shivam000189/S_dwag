@@ -1,9 +1,9 @@
 import type { ReactElement } from "react"
-import { BrainIcon } from "../icons/BrainIcon"
-import { DocumentIcon } from "../icons/DocumentIcon"
-import { ImageIcon } from "../icons/ImageIcon"
-import { VideoIcon } from "../icons/VideoIcon"
-import { Xicon } from "../icons/Xion"
+import { BrainIcon } from "../../icons/BrainIcon"
+import { DocumentIcon } from "../../icons/DocumentIcon"
+import { ImageIcon } from "../../icons/ImageIcon"
+import { VideoIcon } from "../../icons/VideoIcon"
+import { Xicon } from "../../icons/Xion"
 
 
 interface SidebarItemProps {

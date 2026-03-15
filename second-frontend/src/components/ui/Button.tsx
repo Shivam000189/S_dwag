@@ -29,7 +29,7 @@ const sizeStyle = {
 
 
 export const Button = (props: ButtonProps) => {
-    return <button className={`${variants[props.variant]} ${sizeStyle[props.size]} ${defaultStyle}`}>
+    return <button className={`${variants[props.variant]} ${sizeStyle[props.size]} ${defaultStyle} `}>
         {props.startIcon && <span className="w-5 h-5 flex items-center justify-center">{props.startIcon}</span>}
         {props.text} {props.endIcon ? <div className="pl-2">{props.endIcon}</div>: null}
         </button>

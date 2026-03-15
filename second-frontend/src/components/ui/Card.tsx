@@ -1,29 +1,52 @@
 import type { ReactElement } from "react"
 import { ShareIcon } from "../icons/ShareIcon"
 import { DeleteIcon } from "../icons/DeleteIcon"
+import { Xicon } from "../icons/Xion";
+import { VideoIcon } from "../icons/VideoIcon";
+import { DocumentIcon } from "../icons/DocumentIcon";
+import { ImageIcon } from "../icons/ImageIcon";
+
 
 interface CardProps {
-    size: "lg" | "md" | "sm",
-    image ?: ReactElement,
-    title:String,
-    startIcon?:ReactElement
+    title:string;
+    type:'tweet' | 'video' | 'document' | 'link';
+    content?:string;
+    tags?:[];
+    date:string;
 }
 
-const defaultStyle = "rounded-md shadow-md flex bg-white pt-5 pl-3"
 
-
-const sizeStyle = {
-    sm: "h-32 w-32",
-    md: "h-48 w-48",
-    lg: "h-72 w-64"
-}
 
 
 export const Card = (props: CardProps) => {
-    return <div className={`${sizeStyle[props.size]} ${defaultStyle}`}>
-        {props.startIcon ? <div>{props.startIcon}</div> : null} {props.title}
-        <div className="flex gap-4 pl-20"><ShareIcon></ShareIcon>
-        <DeleteIcon></DeleteIcon>
+    const icon ={
+        tweet: <Xicon></Xicon>,
+        video:<VideoIcon></VideoIcon>,
+        document:<DocumentIcon />,
+        link:<ImageIcon />
+    }
+    return <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-4 hover:shadow-md transition-shadow">
+        <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+                {icon[props.type]}
+                <span className="text-brand-text font-medium">{props.title}</span>
+            </div>
+            <div className="flex items-center gap-2 text-brand-muted">
+                <button className="hover:text-brand-primary transition-colors">
+                    <ShareIcon />
+                </button>
+                <button className="hover:text-brand-red-500 transition-colors">
+                    <DeleteIcon></DeleteIcon>
+                </button>
+            </div>
         </div>
+
+
+        <div className="flex-1">
+
+        </div>
+
+
+
     </div>
 }

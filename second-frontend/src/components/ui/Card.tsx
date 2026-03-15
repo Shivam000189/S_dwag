@@ -43,9 +43,41 @@ export const Card = (props: CardProps) => {
 
 
         <div className="flex-1">
-
+            {props.type === 'video' ? (
+            <div className="w-full aspect-video bg-gray-200 rounded-lg flex items-center justify-center mb-4">
+                {/* <FileText size={48} className="text-gray-400" /> */}
+            </div>
+            ) : null}
+            
+            {props.content && (
+            <div className="text-brand-text text-sm leading-relaxed">
+                {props.type === 'document' ? (
+                <div className="space-y-4">
+                    <h3 className="text-xl font-bold">{props.title}</h3>
+                    <ul className="list-disc list-inside space-y-2">
+                    {props.content.split('\n').map((line, i) => (
+                        <li key={i}>{line}</li>
+                    ))}
+                    </ul>
+                </div>
+                ) : (
+                <p>{props.content}</p>
+                )}
+            </div>
+            )}
         </div>
 
+        <div className="flex flex-wrap gap-2">
+            {props.tags ? props.tags.map(tag => (
+            <span key={tag} className="px-3 py-1 bg-brand-secondary text-brand-primary text-xs font-medium rounded-full">
+                #{tag}
+            </span>
+            )) : null}
+        </div>
+
+        <div className="text-sm text-brand-muted">
+            Added on {props.date}
+        </div>
 
 
     </div>

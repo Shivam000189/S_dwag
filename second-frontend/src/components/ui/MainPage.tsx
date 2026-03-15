@@ -15,7 +15,9 @@ export const MainPage = ()=>{
 
         </header>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card type={"video"} title={"Youtube"} date={"dbfsub"} />
+            <Card type={"document"} title={"State of hurmose"} date={"dbfsub"} />
+            <Card type={"video"} title={"State of hurmose"} date={"dbfsub"} />
+            <Card type={"link"} title={"State of hurmose"} tags={["productivity", "learning"]} date={"01/01/2026"} />
             {/* <Card title={'hownkn'} />
             <Card title={'hownkn'}/> */}
         </div>

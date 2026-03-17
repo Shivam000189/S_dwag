@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { CrosIcon } from "../../icons/CrosIcon"
+import { Button } from "./Button"
 
 
 export const CreateComponent = ({open}) => {
@@ -22,7 +23,7 @@ export const CreateComponent = ({open}) => {
                         <Input name={"Tags"} />
                     </div>
                     <div className="flex justify-center">
-                        <span className="h-10 w-50 text-3xl font-medium flex justify-center border rounded cursor-pointer hover:bg-amber-200">Sumbit</span>
+                        <Button variant="primary" text="Sumbit" size="md"></Button>
                     </div>
                     
                 </div>

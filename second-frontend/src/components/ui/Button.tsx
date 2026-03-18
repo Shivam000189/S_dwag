@@ -8,7 +8,7 @@ interface ButtonProps {
     text: string;
     startIcon?: ReactElement;
     endIcon?:ReactElement;
-    onClick?:()=> void;
+    onClick?:() => void;
 }
 
 
@@ -18,18 +18,19 @@ const variants = {
         "secondary":"bg-brand-secondary text-brand-primary hover:bg-opacity-80"
     } 
 
-const defaultStyle = "flex items-center gap-2 rounded-lg font-medium transition-all duration-200 active:scale-95"
-
-
+    
+    
 const sizeStyle = {
-    "sm":"py-1 px-2",
-    "md":"py-2 px-4",
-    "lg":"py-4 px-6"
-}
-
-
+        "sm":"py-1 px-2",
+        "md":"py-2 px-4",
+        "lg":"py-4 px-6"
+    }
+    
+    
 export const Button = (props: ButtonProps) => {
-    return <button className={`${variants[props.variant]} ${sizeStyle[props.size]} ${defaultStyle} `}>
+    const defaultStyle = "flex items-center gap-2 rounded-lg font-medium cursor-pointer transition-all duration-200 active:scale-95 "
+
+    return <button className={`${variants[props.variant]} ${sizeStyle[props.size]} ${defaultStyle}`} onClick={props.onClick}>
         {props.startIcon && <span className="w-5 h-5 flex items-center justify-center">{props.startIcon}</span>}
         {props.text} {props.endIcon ? <div className="pl-2">{props.endIcon}</div>: null}
         </button>

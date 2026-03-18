@@ -10,7 +10,7 @@ function App() {
   return (
     <div className='flex min-h-screen bg-brand-bg font-sans'>
         <SideBar></SideBar>
-        <CreateComponent open={true}/>
+        
         <MainPage></MainPage>
     </div>
   )

@@ -8,10 +8,16 @@ import { useState } from "react"
 
 export const MainPage = ()=>{
     const [click, setClick] = useState(false)
+    const [close, setClose] = useState(!click);  
+
 
     const handleCLick = () => {
         setClick(true);
     }
+    const handleClick2 = () => {
+        setClick(false);
+    }
+
     return <div className="flex-1 p-10">
         <header className="flex items-center justify-between mb-10">
                 <h2 className="text-3xl font-bold text-brand-text">Add Notes</h2>
@@ -26,6 +32,6 @@ export const MainPage = ()=>{
             <Card type={"tweet"} title={"State of hurmose"} date={"dbfsub"} link="https://x.com/claudeai/status/2031088171262554195" />
             <Card type={"document"} title={"State of hurmose"} tags={["productivity", "learning"]} content="hello" date={"01/01/2026"} />
         </div>
-        <CreateComponent open={click}/>
+        <CreateComponent open={click} onClose={handleClick2}/>
     </div>
 }

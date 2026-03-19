@@ -32,7 +32,7 @@ ${open ? "bg-black/40 backdrop-blur-sm opacity-100" : "opacity-0 pointer-events-
 };
 
 
-export function Input({ name }) {
+export function Input({ name}) {
   return (
     <div className="pt-5 flex items-center">
       <span className="w-40 text-2xl font-medium">

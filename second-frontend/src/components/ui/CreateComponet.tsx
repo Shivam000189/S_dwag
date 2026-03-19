@@ -32,10 +32,16 @@ ${open ? "bg-black/40 backdrop-blur-sm opacity-100" : "opacity-0 pointer-events-
 };
 
 
-
-function Input({name}){
-    return <div className="pt-5">
-        <span className="text-2xl font-medium pr-10">{name}</span>
-        <input type={"text"} className="h-10 w-64 border rounded-lg" />
+export function Input({ name }) {
+  return (
+    <div className="pt-5 flex items-center">
+      <span className="w-40 text-2xl font-medium">
+        {name}
+      </span>
+      <input
+        type="text"
+        className="h-10 w-64 border rounded-lg px-2"
+      />
     </div>
+  );
 }

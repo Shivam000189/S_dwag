@@ -1,11 +1,6 @@
-
-import { useState } from 'react'
 import './App.css'
-import { CreateComponent } from './components/ui/CreateComponet'
-import { MainPage } from './components/ui/MainPage'
-import { SideBar } from './components/ui/SideBar'
 import { Dashboard } from './pages/Dashboard'
-import { Route, useNavigate, Routes, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
 import { SignUp } from './pages/Signup'
 import { SignIn } from './pages/Signin'
 
@@ -19,8 +14,6 @@ function App() {
 }
 
 function MainRoutes() {
-  const navigate = useNavigate();
-
   return (
     <Routes>
       <Route path="/" element={<Dashboard></Dashboard>}/>

@@ -2,7 +2,12 @@ import { useState } from "react"
 import { CrosIcon } from "../../icons/CrosIcon"
 import { Button } from "./Button"
 
-export const CreateComponent = ({ open , onClose }) => {
+interface ComponentProps {
+  open:boolean;
+  onClose:() => void;
+}
+
+export const CreateComponent = ({ open , onClose }: ComponentProps) => {
     if (!open) return null;
     // const [close, setClose] = useState(!open);
 
@@ -31,8 +36,13 @@ ${open ? "bg-black/40 backdrop-blur-sm opacity-100" : "opacity-0 pointer-events-
     );
 };
 
+interface InputProps {
+  name: string;
+  ref?:any
+}
 
-export function Input({ name}) {
+
+export function Input({name, ref}:  InputProps) {
   return (
     <div className="pt-5 flex items-center">
       <span className="w-40 text-2xl font-medium">
@@ -40,6 +50,7 @@ export function Input({ name}) {
       </span>
       <input
         type="text"
+        ref={ref}
         className="h-10 w-64 border rounded-lg px-2"
       />
     </div>

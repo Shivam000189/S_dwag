@@ -48,7 +48,7 @@ const tagSchema = new mongoose_1.Schema({
     title: { type: String, required: true, unique: true },
 });
 exports.Tag = (0, mongoose_1.model)("Tag", tagSchema);
-const contentTypes = ["image", "article", "video", "audio"];
+const contentTypes = ["image", "article", "video", "audio", "Youtube", "Twitter"];
 const contentSchema = new mongoose_1.Schema({
     link: { type: String, required: true },
     type: { type: String, enum: contentTypes },

@@ -10,9 +10,11 @@ const db_1 = require("./db");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+const cors_1 = __importDefault(require("cors"));
 const middleware_1 = __importDefault(require("./middleware"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 const PORT = 3000;
 app.get('/', (req, res) => {
     res.send('Server is running');
@@ -160,7 +162,6 @@ app.post("/api/v1/brain/share", middleware_1.default, async (req, res) => {
 app.get("/api/v1/brain/:shareLink", async (req, res) => {
     try {
         const { shareLink } = req.params;
-        console.log('hii');
         const link = await db_1.Link.findOne({ hash: shareLink });
         if (!link)
             return res.status(404).json({ msg: "No link found" });

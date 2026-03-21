@@ -6,11 +6,13 @@ import {User, Content, Tag, Link} from './db';
 import bcrypt from 'bcrypt';
 import dotenv from "dotenv";
 dotenv.config();
+import cors from "cors";
 import authMiddleware from './middleware';
 
 
 const app = express();
 app.use(express.json())
+app.use(cors());
 
 const PORT = 3000;
 

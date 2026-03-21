@@ -75,7 +75,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 }, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
@@ -83,7 +83,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 }, {
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
@@ -91,7 +91,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 } & {
     _id: Types.ObjectId;
 } & {
@@ -103,13 +103,13 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 }, mongoose.Document<unknown, {}, {
     link: string;
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 }, {
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
@@ -117,7 +117,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 } & {
     _id: Types.ObjectId;
 } & {
@@ -132,7 +132,7 @@ export declare const Content: mongoose.Model<{
         title: string;
         tags: Types.ObjectId[];
         userId: Types.ObjectId;
-        type?: "image" | "article" | "video" | "audio" | null;
+        type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
     }, {
         id: string;
     }, mongoose.DefaultSchemaOptions> & Omit<{
@@ -140,7 +140,7 @@ export declare const Content: mongoose.Model<{
         title: string;
         tags: Types.ObjectId[];
         userId: Types.ObjectId;
-        type?: "image" | "article" | "video" | "audio" | null;
+        type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
     } & {
         _id: Types.ObjectId;
     } & {
@@ -153,7 +153,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 } & {
     _id: Types.ObjectId;
 } & {
@@ -163,7 +163,7 @@ export declare const Content: mongoose.Model<{
     title: string;
     tags: Types.ObjectId[];
     userId: Types.ObjectId;
-    type?: "image" | "article" | "video" | "audio" | null;
+    type?: "image" | "article" | "video" | "audio" | "Youtube" | "Twitter" | null;
 } & {
     _id: Types.ObjectId;
 } & {

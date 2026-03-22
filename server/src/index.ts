@@ -10,9 +10,12 @@ import cors from "cors";
 import authMiddleware from './middleware';
 
 
+
+
 const app = express();
-app.use(express.json())
+app.use(express.json());
 app.use(cors());
+
 
 const PORT = 3000;
 

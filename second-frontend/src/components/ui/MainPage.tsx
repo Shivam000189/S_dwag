@@ -4,11 +4,16 @@ import { ShareButton } from "../../icons/shareButton"
 import { Card } from "./Card"
 import { CreateComponent } from "./CreateComponet"
 import { useState } from "react"
+import { useContent } from "../../hooks/useContent"
 
 
 export const MainPage = ()=>{
     const [click, setClick] = useState(false)
-    const [close, setClose] = useState(!click);  
+    const [close, setClose] = useState(!click); 
+    const contents = useContent();
+    
+    
+
 
 
     const handleCLick = () => {
@@ -28,9 +33,8 @@ export const MainPage = ()=>{
 
         </header>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card type={"video"} title={"State of hurmose"} date={"dbfsub"} link="https://www.youtube.com/watch?v=YBB3GbluHjA" content="hello"/>
-            <Card type={"tweet"} title={"State of hurmose"} date={"dbfsub"} link="https://x.com/claudeai/status/2031088171262554195" />
-            <Card type={"document"} title={"State of hurmose"} tags={["productivity", "learning"]} content="hello" date={"01/01/2026"} />
+            {contents.map(({type, title , link})=> <Card type={type} title={title} link={link} content={title}/>)}
+            
         </div>
         <CreateComponent open={click} onClose={handleClick2}/>
     </div>

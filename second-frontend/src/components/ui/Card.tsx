@@ -7,7 +7,7 @@ import { DocumentIcon } from "../../icons/DocumentIcon";
 import { ImageIcon } from "../../icons/ImageIcon";
 
 
-type Note = 'tweet' | 'video' | 'document' | 'link';
+type Note = 'Twitter' | 'video' | 'document' | 'link' | 'Youtube' ;
 
 interface CardProps {
     title:string;
@@ -15,7 +15,7 @@ interface CardProps {
     link?:string;
     content?:string;
     tags?:[string, string];
-    date:string;
+    date?:string;
 }
 
 
@@ -23,10 +23,11 @@ interface CardProps {
 
 export const Card = (props: CardProps) => {
     const icon ={
-        tweet: <Xicon></Xicon>,
+        Twitter: <Xicon></Xicon>,
         video:<VideoIcon></VideoIcon>,
         document:<DocumentIcon />,
-        link:<ImageIcon />
+        link:<ImageIcon />,
+        Youtube:<VideoIcon />
     }
     return <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-4 hover:shadow-md transition-shadow">
         <div className="flex items-center justify-between">
@@ -46,13 +47,13 @@ export const Card = (props: CardProps) => {
         
 
         <div className="flex-1">
-            {props.type === 'video' && (
+            {props.type === 'Youtube' && (
             <div>
-                {props.type === 'video' && <iframe className="w-full" src={props.link?.replace("watch" , "embed").replace("?v=", "/")} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>}
+                {props.type === 'Youtube' && <iframe className="w-full" src={props.link?.replace("watch" , "embed").replace("?v=", "/")} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>}
             </div>
             )}
 
-            {props.type === 'tweet' && 
+            {props.type === 'Twitter' && 
                 <div className="h-48 object-cover overflow-auto">
                     <blockquote className="twitter-tweet">
                         <a href={props.link?.replace("x.com", "twitter.com")}></a> 

@@ -11,7 +11,6 @@ import authMiddleware from './middleware';
 
 
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());

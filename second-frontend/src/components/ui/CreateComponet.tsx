@@ -1,4 +1,3 @@
-
 import { useRef, useState } from "react";
 import { CrosIcon } from "../../icons/CrosIcon"
 import { Button } from "./Button"
@@ -13,82 +12,109 @@ enum ContentTypes {
 }
 
 interface ComponentProps {
-  open:boolean;
-  onClose:() => void;
+  open: boolean;
+  onClose: () => void;
 }
 
-export const CreateComponent = ({ open , onClose }: ComponentProps) => {
-    if (!open) return null;
-    const navigate = useNavigate();
-    const [type, setType] = useState(ContentTypes.Youtube);
+export const CreateComponent = ({ open, onClose }: ComponentProps) => {
+  if (!open) return null;
+  const navigate = useNavigate();
+  const [type, setType] = useState(ContentTypes.Youtube);
 
-    const linkRef = useRef<HTMLInputElement | null>(null)
-    const titleRef = useRef<HTMLInputElement | null>(null)
+  const linkRef = useRef<HTMLInputElement | null>(null);
+  const titleRef = useRef<HTMLInputElement | null>(null);
 
-    async function addContent(){
-      
+  async function addContent() {
+    const link = linkRef.current?.value;
+    const title = titleRef.current?.value;
 
-        const link = linkRef.current?.value
-        const title = titleRef.current?.value
+    await axios.post(`${BACKEND_URL}/api/v1/content`, {
+      type,
+      link,
+      title
+    }, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+    alert('content created');
+    navigate('/dashboard');
+  }
 
-        await axios.post(`${BACKEND_URL}/api/v1/content`, {
-          type,
-          link,
-          title
-        } , {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          }
-        })
-        alert('content create')
-        navigate('/dashboard');
-    }
+  return (
+    <div className={`fixed inset-0 flex justify-center items-center z-50 transition-all duration-300 
+      ${open ? "bg-black/50 backdrop-blur-sm opacity-100" : "opacity-0 pointer-events-none"}`}>
 
-    return (
-        <div className={`fixed inset-0 flex justify-center items-center z-50 transition-all duration-300 
-${open ? "bg-black/40 backdrop-blur-sm opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <div className="h-100 w-100 bg-white justify-center rounded-lg shadow">
-                <div className="flex justify-end p-2" >
-                    <CrosIcon  onClose={onClose}/>
-                </div>
-                <div className="flex justify-center">
-                    <div className="text-2xl font-medium">Create Content</div>
-                </div>
+      <div className="bg-[#1a1617] text-white w-96 rounded-2xl shadow-2xl p-6 flex flex-col gap-5">
 
-                <div className="p-5">
-                    <Input ref={linkRef} name={"Link"} />
-                    <Input ref={titleRef} name={"Title"} />
-                </div>
-
-                <div className="flex justify-center p-3 gap-2">
-                  <Button text="Youtube" variant={type === ContentTypes.Youtube ? "primary" : "secondary"} onClick={() => {setType(ContentTypes.Youtube)}} size="md"/>
-                  <Button text="twitter" variant={type === ContentTypes.Twitter ? "primary" : "secondary"} onClick={() => {setType(ContentTypes.Twitter)}} size="md"/>
-                </div>
-
-                <div className="flex justify-center">
-                    <Button onClick={addContent} variant="primary" text="Submit" size="md" />
-                </div>
-            </div>
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold tracking-tight text-white">Create Content</h2>
+          <button
+            onClick={onClose}
+            className="text-white/40 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
+          >
+            <CrosIcon onClose={onClose} />
+          </button>
         </div>
-    );
+
+        {/* Divider */}
+        <div className="border-t border-white/10" />
+
+        {/* Inputs */}
+        <div className="flex flex-col gap-4">
+          <Input ref={linkRef} name="Link" />
+          <Input ref={titleRef} name="Title" />
+        </div>
+
+        {/* Type selector */}
+        <div className="flex gap-2">
+          {[ContentTypes.Youtube, ContentTypes.Twitter].map((t) => (
+            <button
+              key={t}
+              onClick={() => setType(t)}
+              className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all
+                ${type === t
+                  ? "bg-white text-[#1a1617] shadow"
+                  : "bg-white/10 text-white/60 hover:bg-white/15 hover:text-white"
+                }`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {/* Submit */}
+        <button
+          onClick={addContent}
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 
+            text-white font-semibold text-sm tracking-wide hover:opacity-90 active:scale-[0.98] transition-all"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  );
 };
 
 interface InputProps {
   name: string;
-  ref?:any;
+  ref?: any;
 }
 
-
-export function Input({name, ref}:  InputProps) {
+export function Input({ name, ref }: InputProps) {
   return (
-    <div className="pt-5 flex items-center">
-      <span className="w-40 text-2xl font-medium">
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-medium text-white/50 uppercase tracking-widest">
         {name}
-      </span>
+      </label>
       <input
-        type={"text"}
+        type="text"
         ref={ref}
-        className="h-10 w-64 border rounded-lg px-2"
+        placeholder={`Enter ${name.toLowerCase()}...`}
+        className="h-10 w-full rounded-xl bg-white/10 border border-white/10 px-3 text-sm text-white 
+          placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 
+          focus:border-white/20 transition-all"
       />
     </div>
   );
